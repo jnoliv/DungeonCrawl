@@ -10,7 +10,7 @@ defmodule DungeonCrawl do
 		hero = CLI.choose_hero(Assets.heroes)
 
 		# Game Loop
-		success = game_loop(hero)
+		{success, hero} = game_loop(hero)
 
 		# End
 		if success do
@@ -35,46 +35,46 @@ defmodule DungeonCrawl do
 
 		# Check for end game conditions
 		if hero.hp <= 0 do
-			false
+			{false, hero}
 		else
-			if room.trigger == Exit do
-				true
+			if room.trigger == :exit do
+				{true, hero}
 			else
 				game_loop(hero)
 			end
 		end
 	end
 
-	def battle(hero, enemy, hero_initiative) do
-		do_dmg = fn (dmg, hp) ->
-			hp = hp - dmg
-			if hp < 0, do: 0, else: hp
-		end
+	def battle(hero, enemy, true) do
+		dmg = Enum.random(hero.attack_range)
+		CLI.show_attack(hero, enemy, dmg)
 
-		if hero_initiative do
-			dmg = Enum.random(hero.attack_range)
-			CLI.show_attack(hero, enemy, dmg)
+		new_hp = do_dmg(dmg, enemy.hp)
 
-			new_hp = do_dmg.(dmg, enemy.hp)
-
-			if new_hp == 0 do
-				hero
-			else
-				enemy = Map.put(enemy, :hp, new_hp)
-				battle(hero, enemy, false)
-			end
+		if new_hp == 0 do
+			hero
 		else
-			dmg = Enum.random(enemy.attack_range)
-			CLI.show_attack(enemy, hero, dmg)
-
-			new_hp = do_dmg.(dmg, hero.hp)
-			hero = Map.put(hero, :hp, new_hp)
-
-			if new_hp == 0 do
-				hero
-			else
-				battle(hero, enemy, true)
-			end
+			enemy = Map.put(enemy, :hp, new_hp)
+			battle(hero, enemy, false)
 		end
+	end
+
+	def battle(hero, enemy, false) do
+		dmg = Enum.random(enemy.attack_range)
+		CLI.show_attack(enemy, hero, dmg)
+
+		new_hp = do_dmg(dmg, hero.hp)
+		hero = Map.put(hero, :hp, new_hp)
+
+		if new_hp == 0 do
+			hero
+		else
+			battle(hero, enemy, true)
+		end
+	end
+
+	defp do_dmg(dmg, hp) do
+		hp = hp - dmg
+		if hp < 0, do: 0, else: hp
 	end
 end

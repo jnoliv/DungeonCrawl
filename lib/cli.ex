@@ -80,6 +80,11 @@ defmodule CLI do
 		IO.puts "You currently have #{hero.hp}/#{hero.max_hp} HP\n"
 	end
 
+	def show_heal(heal, hero) do
+		IO.puts "You put your hands together at your heart, focus inward and quicky say a prayer."
+		IO.puts "You healed #{heal} HP and now have #{hero.hp}/#{hero.max_hp} HP\n"
+	end
+
 	def show_win(hero) do
 		IO.puts ""
 		IO.puts "As you move forward, you see a staircase lit from above"

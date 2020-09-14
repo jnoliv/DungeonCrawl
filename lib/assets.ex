@@ -1,6 +1,6 @@
 defmodule Assets do
 	alias Character
-	alias Action.Forward
+	alias Action.{Forward, Heal}
 
 	def welcome_message() do
 		"
@@ -70,22 +70,30 @@ You must survive and find your way to the surface
 	def rooms do
 		[%Room{
 			description: "You enter a wide, square, well lit room. All four walls are lined with bookshelves, filled with old, dusty tomes. You think about resting for a while and browsing through the books, but you decide against it. There's no time to lose!",
-			actions: [{Forward, "Move to the next room, whatever it takes!"}],
+			actions: [
+				{Forward, "Move to the next room, whatever it takes!"},
+				{Heal, "Heal before engaging the creature!"}],
 			trigger: Enemy
 		},
 		%Room{
 			description: "As you cross the doorway, you see hundreds of old weapons and dozens of armour sets. They don't reflect as much light as one would expect, probably because of all the dust they've collected. Sadly, all the armour sets are too small for you and the weapons too heavy. Definitely the work of Dwarves.",
-			actions: [{Forward, "Move to the next room, whatever it takes!"}],
+			actions: [
+				{Forward, "Move to the next room, whatever it takes!"},
+				{Heal, "Heal before engaging the creature!"}],
 			trigger: Enemy
 		},
 		%Room{
 			description: "You open the door to this room and you're instantly hit with the smell of rotting food. As you step in, you realize you're in an abandoned kitchen. There's a fireplace to your left, a counter to your right and a lot of cabinets on the other end. Those cabinets are probably filled with the rotting food. The smell is so pungent you decide searching for something edible would be a hopeless endeavour.",
-			actions: [{Forward, "Move to the next room, whatever it takes!"}],
+			actions: [
+				{Forward, "Move to the next room, whatever it takes!"},
+				{Heal, "Heal before engaging the creature!"}],
 			trigger: Enemy
 		},
 		%Room{
 			description: "You step into what looks like a hallway. There are large statues of dwarves in both sides of the room and long extinguished candeliers on the ceiling. Is this the entrance to the dungeon?",
-			actions: [{Forward, "Move to the next room, whatever it takes!"}],
+			actions: [
+				{Forward, "Move to the next room, whatever it takes!"},
+				{Heal, "Heal before engaging the creature!"}],
 			trigger: Exit
 		}]
 	end

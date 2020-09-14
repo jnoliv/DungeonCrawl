@@ -5,7 +5,7 @@ defmodule Action.Forward do
 	alias CLI
 
 	@impl Action
-	def run(hero, enemy) do		
+	def run(hero, enemy) do
 		# Battle
 		hero = DungeonCrawl.battle(hero, enemy, true)
 

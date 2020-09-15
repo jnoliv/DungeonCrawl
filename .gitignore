@@ -22,3 +22,5 @@ erl_crash.dump
 # Ignore package tarball (built via "mix hex.build").
 dungeon_crawl-*.tar
 
+# Ignore executable
+dungeon_crawl
